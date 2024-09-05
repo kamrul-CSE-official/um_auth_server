@@ -16,9 +16,12 @@ let server: Server;
 
 async function bootstrap() {
   try {
-    await RedisClient.connect().then(() => {
-      subscribeToEvents();
-    });
+    await RedisClient.connect()
+      .then(() => {
+        console.log('Redis is connected.');
+        subscribeToEvents();
+      })
+      .catch(err => console.log('Redis connection error! ', err));
 
     await mongoose.connect(config.database_url as string);
     // logger.info(`🛢   Database is connected successfully`);
